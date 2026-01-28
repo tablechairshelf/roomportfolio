@@ -31,3 +31,61 @@
     height: 100%;
   }
 }
+
+/* Modal + Exit button styles */
+.hidden { display: none !important; }
+
+.zoom-exit-btn {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  padding: 10px 14px;
+  font-size: 14px;
+  z-index: 9999;
+  cursor: pointer;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
+.zoom-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 10000;
+}
+
+.zoom-modal {
+  width: 70vw;
+  max-width: 1100px;
+  height: 70vh;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.zoom-modal-header { display:flex; align-items:center; justify-content:space-between; }
+
+.zoom-modal-header h2 { margin:0; font-size:20px; }
+
+.zoom-modal-content {
+  margin-top: 12px;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* make images inside modal responsive */
+.zoom-modal-content img { max-width: 100%; height: auto; border-radius: 6px; }

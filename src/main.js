@@ -368,6 +368,8 @@ const _initialCameraPos = camera.position.clone();
 const _initialTarget = controls.target.clone();
 let isZoomed = false;
 let currentZoomTarget = null;
+let isZooming = false;
+let isModalOpen = false;
 // Per-object camera & control presets (provided coordinates)
 const presets = {
   "MusicDisplay_Raycaster_Hover": {
@@ -388,35 +390,128 @@ const presets = {
   }
 };
 
+// per-object HTML content store (can include links/images/HTML). Edit these strings in code.
+const userContents = {
+  "MusicDisplay_Raycaster_Hover": `
+    <h3>Music Display</h3>
+    <p>Short description about music projects. You can include <a href="https://example.com" target="_blank" rel="noopener">links</a> and images.</p>
+    <p><img src="/images/music-sample.jpg" alt="Music" style="max-width:100%;height:auto;border-radius:6px"></p>
+  `,
+  "ArtworkDisplay_Raycaster_Hover": `
+    <h3>Artwork Display</h3>
+    <p>Artwork details and gallery. Add formatted text and external resources.</p>
+    <p><img src="/images/artwork-sample.jpg" alt="Artwork" style="max-width:100%;height:auto;border-radius:6px"></p>
+  `,
+  "ComputerProjectsDisplay1_Raycaster_Hover": `
+    <h3>Computer Projects</h3>
+    <p>List of projects, links, and notes.</p>
+    <ul>
+      <li><a href="https://github.com" target="_blank" rel="noopener">Project repo</a></li>
+    </ul>
+  `,
+  "ComputerDisplay2_Raycaster_Hover": `
+    <h3>Computer Display 2</h3>
+    <p>Additional details and media.</p>
+  `
+};
+
+// create modal overlay (hidden until used). Prefer static HTML in index.html; otherwise create fallback elements.
+function createModal() {
+  const existing = document.getElementById('zoom-modal-overlay');
+  if (existing) return; // use index.html-provided markup
+
+  const overlay = document.createElement('div');
+  overlay.id = 'zoom-modal-overlay';
+  overlay.classList.add('zoom-modal-overlay', 'hidden');
+
+  const modal = document.createElement('div');
+  modal.id = 'zoom-modal';
+  modal.classList.add('zoom-modal');
+
+  const header = document.createElement('div');
+  header.classList.add('zoom-modal-header');
+  const title = document.createElement('h2');
+  title.id = 'zoom-modal-title';
+  header.appendChild(title);
+
+  const content = document.createElement('div');
+  content.id = 'zoom-modal-content';
+  content.classList.add('zoom-modal-content');
+  content.contentEditable = 'false';
+
+  modal.appendChild(header);
+  modal.appendChild(content);
+  overlay.appendChild(modal);
+  overlay.addEventListener('click', hideModal);
+  document.body.appendChild(overlay);
+}
+createModal();
+
+function showModalFor(name) {
+  const overlay = document.getElementById('zoom-modal-overlay');
+  const title = document.getElementById('zoom-modal-title');
+  const content = document.getElementById('zoom-modal-content');
+  if (!overlay || !title || !content) return;
+  title.textContent = name;
+  overlay.setAttribute('data-for', name);
+  // render HTML content (allows links, images, formatting)
+  content.innerHTML = userContents[name] || '';
+  overlay.classList.remove('hidden');
+  overlay.setAttribute('aria-hidden', 'false');
+  isModalOpen = true;
+}
+
+function hideModal() {
+  const overlay = document.getElementById('zoom-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.add('hidden');
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.removeAttribute('data-for');
+  isModalOpen = false;
+}
+
 // create a simple exit button (hidden until zoomed)
 function createExitButton() {
+  const existing = document.getElementById('zoom-exit-btn');
+  if (existing) return; // index.html already provides it
   const btn = document.createElement('button');
   btn.id = 'zoom-exit-btn';
+  btn.classList.add('zoom-exit-btn', 'hidden');
   btn.textContent = 'Exit';
-  Object.assign(btn.style, {
-    position: 'fixed',
-    right: '20px',
-    top: '20px',
-    padding: '10px 14px',
-    fontSize: '14px',
-    zIndex: 9999,
-    display: 'none',
-    cursor: 'pointer',
-    background: 'rgba(0,0,0,0.6)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '6px'
-  });
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
+    if (isModalOpen) { hideModal(); return; }
     exitZoom();
   });
   document.body.appendChild(btn);
 }
 createExitButton();
 
+// If index.html provided static elements, ensure they have the right listeners
+{
+  const overlay = document.getElementById('zoom-modal-overlay');
+  if (overlay) {
+    overlay.addEventListener('click', hideModal);
+    overlay.classList.add('hidden');
+    overlay.setAttribute('aria-hidden', 'true');
+    const modalEl = document.getElementById('zoom-modal');
+    if (modalEl) modalEl.addEventListener('click', (ev) => ev.stopPropagation());
+  }
+
+  const exitBtn = document.getElementById('zoom-exit-btn');
+  if (exitBtn) {
+    exitBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isModalOpen) { hideModal(); return; }
+      exitZoom();
+    });
+    exitBtn.classList.add('hidden');
+  }
+}
+
 function zoomToObject(sourceObject) {
   if (!sourceObject || isZoomed) return;
+  isZooming = true;
   isZoomed = true;
   currentZoomTarget = sourceObject;
 
@@ -465,13 +560,22 @@ function zoomToObject(sourceObject) {
     onUpdate: () => controls.update(),
     onComplete: () => {
       const btn = document.getElementById('zoom-exit-btn');
-      if (btn) btn.style.display = 'block';
+      if (btn) btn.classList.remove('hidden');
+      isZooming = false;
+      // optionally open modal automatically if requested via data attribute
+      const overlay = document.getElementById('zoom-modal-overlay');
+      const forName = overlay && overlay.getAttribute && overlay.getAttribute('data-pending-open');
+      if (forName) {
+        overlay.removeAttribute('data-pending-open');
+        showModalFor(forName);
+      }
     }
   });
 }
 
 function zoomToPreset(preset) {
   if (!preset || isZoomed) return;
+  isZooming = true;
   isZoomed = true;
   controls.enabled = false;
 
@@ -496,7 +600,14 @@ function zoomToPreset(preset) {
     onUpdate: () => controls.update(),
     onComplete: () => {
       const btn = document.getElementById('zoom-exit-btn');
-      if (btn) btn.style.display = 'block';
+      if (btn) btn.classList.remove('hidden');
+      isZooming = false;
+      const overlay = document.getElementById('zoom-modal-overlay');
+      const forName = overlay && overlay.getAttribute && overlay.getAttribute('data-pending-open');
+      if (forName) {
+        overlay.removeAttribute('data-pending-open');
+        showModalFor(forName);
+      }
     }
   });
 }
@@ -504,8 +615,10 @@ function zoomToPreset(preset) {
 
 function exitZoom() {
   if (!isZoomed) return;
+  // hide modal immediately when exiting
+  hideModal();
   const btn = document.getElementById('zoom-exit-btn');
-  if (btn) btn.style.display = 'none';
+  if (btn) btn.classList.add('hidden');
 
   gsap.killTweensOf(camera.position);
   gsap.killTweensOf(controls.target);
@@ -538,11 +651,28 @@ function exitZoom() {
   });
 }
 
+
 // click handler to zoom into the 4 specific named items
 window.addEventListener('click', (e) => {
   // ignore clicks on the UI elements
-  if (e.target && e.target.id === 'zoom-exit-btn') return;
-  if (isZoomed) return;
+  if (e.target && (e.target.id === 'zoom-exit-btn' || e.target.closest && e.target.closest('#zoom-modal'))) return;
+  // if still zooming, ignore clicks
+  if (isZooming) return;
+  // if already zoomed, clicking the zoomed object should open its modal (if not open)
+  if (isZoomed) {
+    // cast and see if we clicked the currently zoomed object
+    raycaster.setFromCamera(pointer, camera);
+    const hitsWhileZoomed = raycaster.intersectObjects(raycasterObjects);
+    if (hitsWhileZoomed && hitsWhileZoomed.length > 0) {
+      const pickedWhileZoomed = hitsWhileZoomed[0].object;
+      const sourceWhile = pickedWhileZoomed.userData && pickedWhileZoomed.userData.sourceObject ? pickedWhileZoomed.userData.sourceObject : pickedWhileZoomed;
+      if (sourceWhile && currentZoomTarget && sourceWhile === currentZoomTarget && !isModalOpen) {
+        // open modal for this object
+        showModalFor(currentZoomTarget.name);
+      }
+    }
+    return;
+  }
 
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects(raycasterObjects);
@@ -561,11 +691,16 @@ window.addEventListener('click', (e) => {
   }
 
   if (preset) {
+    // request modal open after zoom completes by setting a temporary attribute
+    const overlay = document.getElementById('zoom-modal-overlay');
+    if (overlay) overlay.setAttribute('data-pending-open', source.name);
     zoomToPreset(preset);
     return;
   }
   // fallback: if a non-preset object but still tagged, try auto-zoom
   if (source.userData && source.userData.initialScale) {
+    const overlay = document.getElementById('zoom-modal-overlay');
+    if (overlay) overlay.setAttribute('data-pending-open', source.name);
     zoomToObject(source);
   }
 });

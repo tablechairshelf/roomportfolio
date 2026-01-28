@@ -12,6 +12,16 @@
     <div id="experience">
       <canvas id="experience-canvas" class="experience-canvas"></canvas>
     </div>
+    <!-- Modal and exit button (styled via src/style.scss) -->
+    <button id="zoom-exit-btn" class="zoom-exit-btn hidden">Exit</button>
+    <div id="zoom-modal-overlay" class="zoom-modal-overlay hidden" aria-hidden="true">
+      <div id="zoom-modal" class="zoom-modal">
+        <div class="zoom-modal-header">
+          <h2 id="zoom-modal-title"></h2>
+        </div>
+        <div id="zoom-modal-content" class="zoom-modal-content" aria-live="polite"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
