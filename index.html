@@ -9,16 +9,22 @@
   <body>
     <div id="app"></div>
 
+    <section id="artwork-section" class="art-section">
+      <h2 class="art-section-title">Artwork</h2>
+      <div id="art-grid" class="art-grid" aria-live="polite"></div>
+    </section>
+
     <div id="experience">
       <canvas id="experience-canvas" class="experience-canvas"></canvas>
     </div>
     <!-- Modal and exit button (styled via src/style.scss) -->
-    <button id="zoom-exit-btn" class="zoom-exit-btn hidden">Exit</button>
+      <!-- Modal (exit button removed; modal close will exit zoom) -->
     <div id="zoom-modal-overlay" class="zoom-modal-overlay hidden" aria-hidden="true">
       <div id="zoom-modal" class="zoom-modal">
         <div class="zoom-modal-header">
           <h2 id="zoom-modal-title"></h2>
         </div>
+        <button id="zoom-modal-close" class="zoom-modal-close" aria-label="Close">X</button>
         <div id="zoom-modal-content" class="zoom-modal-content" aria-live="polite"></div>
       </div>
     </div>

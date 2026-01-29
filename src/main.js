@@ -312,6 +312,22 @@ function playHoverAnimation (object, isHovering) {
   }
 }
 
+let renderAnimId = null;
+function pauseRendering() {
+  try {
+    if (renderAnimId !== null) cancelAnimationFrame(renderAnimId);
+  } catch (e) {}
+  renderAnimId = null;
+  // lower pixel ratio while modal is open to reduce GPU cost
+  try { renderer.setPixelRatio(1); } catch (e) {}
+}
+
+function resumeRendering() {
+  // restore pixel ratio and restart loop
+  try { renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); } catch (e) {}
+  if (renderAnimId === null) render();
+}
+
 const render = () => {
   controls.update();
 
@@ -358,7 +374,7 @@ const render = () => {
 
 
   renderer.render(scene, camera);
-  window.requestAnimationFrame(render);
+  renderAnimId = window.requestAnimationFrame(render);
 };
 
 render();
@@ -393,24 +409,24 @@ const presets = {
 // per-object HTML content store (can include links/images/HTML). Edit these strings in code.
 const userContents = {
   "MusicDisplay_Raycaster_Hover": `
-    <h3>Music Display</h3>
+    <h1>Music Works</h1>
     <p>Short description about music projects. You can include <a href="https://example.com" target="_blank" rel="noopener">links</a> and images.</p>
     <p><img src="/images/music-sample.jpg" alt="Music" style="max-width:100%;height:auto;border-radius:6px"></p>
   `,
   "ArtworkDisplay_Raycaster_Hover": `
-    <h3>Artwork Display</h3>
-    <p>Artwork details and gallery. Add formatted text and external resources.</p>
-    <p><img src="/images/artwork-sample.jpg" alt="Artwork" style="max-width:100%;height:auto;border-radius:6px"></p>
+    <h1>Art Pieces</h1>
+    <p>This is a collection of digital and physical artworks, or anything artistry related (not including music) Mainly art pieces that I have done over the years.</p>
+    <p><img src="/images/Artwork/PW.JPG" alt="Artwork" style="max-width:100%;height:auto;border-radius:6px;border-width:10px;border-color:black;border-style:solid"></p>
   `,
   "ComputerProjectsDisplay1_Raycaster_Hover": `
-    <h3>Computer Projects</h3>
+    <h1>Computer and Engineering Projects</h1>
     <p>List of projects, links, and notes.</p>
     <ul>
       <li><a href="https://github.com" target="_blank" rel="noopener">Project repo</a></li>
     </ul>
   `,
   "ComputerDisplay2_Raycaster_Hover": `
-    <h3>Computer Display 2</h3>
+    <h1>Other Projects</h1>
     <p>Additional details and media.</p>
   `
 };
@@ -452,13 +468,27 @@ function showModalFor(name) {
   const title = document.getElementById('zoom-modal-title');
   const content = document.getElementById('zoom-modal-content');
   if (!overlay || !title || !content) return;
-  title.textContent = name;
+  // do not show the raw object name as the title; leave header hidden
+  title.textContent = '';
   overlay.setAttribute('data-for', name);
   // render HTML content (allows links, images, formatting)
-  content.innerHTML = userContents[name] || '';
+  if (name === 'ArtworkDisplay_Raycaster_Hover') {
+    // build gallery inside modal rather than showing the page grid
+    content.innerHTML = `\n      <h1>Art Pieces</h1>\n      <div id="modal-art-grid" class="art-grid modal-art-grid"></div>`;
+    // populate gallery
+    const modalGrid = document.getElementById('modal-art-grid');
+    if (modalGrid) buildArtworkGallery(modalGrid);
+  } else {
+    content.innerHTML = userContents[name] || '';
+  }
   overlay.classList.remove('hidden');
   overlay.setAttribute('aria-hidden', 'false');
+  // hide header visually by adding a class to the modal element
+  const modalEl = document.getElementById('zoom-modal');
+  if (modalEl) modalEl.classList.add('no-header');
   isModalOpen = true;
+  // pause heavy rendering while user inspects modal/gallery
+  try { pauseRendering(); } catch (e) {}
 }
 
 function hideModal() {
@@ -467,23 +497,16 @@ function hideModal() {
   overlay.classList.add('hidden');
   overlay.setAttribute('aria-hidden', 'true');
   overlay.removeAttribute('data-for');
+  const modalEl = document.getElementById('zoom-modal');
+  if (modalEl) modalEl.classList.remove('no-header');
   isModalOpen = false;
+  // resume rendering when modal is closed
+  try { resumeRendering(); } catch (e) {}
 }
 
 // create a simple exit button (hidden until zoomed)
 function createExitButton() {
-  const existing = document.getElementById('zoom-exit-btn');
-  if (existing) return; // index.html already provides it
-  const btn = document.createElement('button');
-  btn.id = 'zoom-exit-btn';
-  btn.classList.add('zoom-exit-btn', 'hidden');
-  btn.textContent = 'Exit';
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (isModalOpen) { hideModal(); return; }
-    exitZoom();
-  });
-  document.body.appendChild(btn);
+  // intentionally left blank — no standalone exit button is created.
 }
 createExitButton();
 
@@ -506,6 +529,10 @@ createExitButton();
       exitZoom();
     });
     exitBtn.classList.add('hidden');
+  }
+  const closeBtn = document.getElementById('zoom-modal-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => { e.stopPropagation(); hideModal(); exitZoom(); });
   }
 }
 
@@ -706,3 +733,56 @@ window.addEventListener('click', (e) => {
 });
 
 //pick up video from start of draco
+// --------------------- Artwork gallery ---------------------
+const artworkImages = [
+  'Astonaut.jpg','AWSF.jpg','Banana.jpg','Bird.JPG','Blackhole.jpg','Cabo.jpg','Croc.jpg','Faces.PNG','Flower.JPG','Gohan.JPG','Man.jpg','Name.jpg','Piano.jpg','Pigeon.JPG','Polar.PNG','PW.JPG','Self.png','Spiderman.JPG','Thumbnail.jpg','Waterhand.JPG'
+];
+
+function niceTitle(filename) {
+  return filename.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+}
+
+function openArtModal(src, title, desc) {
+  const overlay = document.getElementById('zoom-modal-overlay');
+  const content = document.getElementById('zoom-modal-content');
+  const modalEl = document.getElementById('zoom-modal');
+  if (!overlay || !content) return;
+  content.innerHTML = `<img class="art-modal-img" src="/images/Artwork/${src}" alt="${title}"><p class="art-modal-desc">${desc || ''}</p>`;
+  if (modalEl) modalEl.classList.add('no-header');
+  overlay.classList.remove('hidden');
+  overlay.setAttribute('aria-hidden', 'false');
+  isModalOpen = true;
+  try { pauseRendering(); } catch (e) {}
+}
+
+function buildArtworkGallery(container) {
+  const grid = container || document.getElementById('art-grid');
+  if (!grid) return;
+  // clear existing items
+  grid.innerHTML = '';
+  artworkImages.forEach((fn) => {
+    const title = niceTitle(fn);
+    const desc = '';
+    const item = document.createElement('div');
+    item.className = 'art-item';
+
+    const btn = document.createElement('button');
+    btn.className = 'art-thumb';
+    btn.setAttribute('aria-label', `Open artwork ${title}`);
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.src = `/images/Artwork/${fn}`;
+    img.alt = title;
+    btn.appendChild(img);
+    btn.addEventListener('click', (e) => { e.stopPropagation(); openArtModal(fn, title, desc); });
+
+    const cap = document.createElement('div');
+    cap.className = 'art-caption';
+    cap.textContent = title;
+
+    item.appendChild(btn);
+    item.appendChild(cap);
+    grid.appendChild(item);
+  });
+}

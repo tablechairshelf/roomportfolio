@@ -29,7 +29,8 @@
   #experience-canvas {
     width: 100%;
     height: 100%;
-  }
+  position: relative;
+}
 }
 
 /* Modal + Exit button styles */
@@ -43,7 +44,7 @@
   font-size: 14px;
   z-index: 9999;
   cursor: pointer;
-  background: rgba(0,0,0,0.6);
+  background: rgb(0, 0, 0);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -55,23 +56,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.45);
+  // background: rgba(0,0,0,0.45);
   padding: 20px;
   box-sizing: border-box;
   z-index: 10000;
 }
 
 .zoom-modal {
-  width: 70vw;
-  max-width: 1100px;
-  height: 70vh;
-  background: #fff;
+  width: 80vw;
+  max-width: 2500px;
+  height: 89vh;
+  background: #261b4d;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.35);
   padding: 18px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  color: #f7d181;
+  
 }
 
 .zoom-modal-header { display:flex; align-items:center; justify-content:space-between; }
@@ -84,8 +87,50 @@
   overflow: auto;
   padding: 8px;
   border-radius: 6px;
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(0, 0, 0, 0.959);
 }
 
 /* make images inside modal responsive */
 .zoom-modal-content img { max-width: 100%; height: auto; border-radius: 6px; }
+
+/* Hide header when modal has no-header class (used to avoid showing raw object names) */
+.zoom-modal.no-header .zoom-modal-header { display: none; }
+
+/* Close button inside modal */
+.zoom-modal-close {
+  position: absolute;
+  top: 80px;
+  right: 210px;
+  padding: 11px 15px;
+  background: rgb(0, 0, 0);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10001;
+  font-size: 20px;
+}
+
+/* Artwork grid styles */
+.art-section { padding: 24px; max-width: 1200px; margin: 22px auto; z-index: 2; position: relative; display: none; }
+.art-section-title { font-size: 20px; color: #261b4d; margin-bottom: 12px; }
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.art-item { display:flex; flex-direction:column; gap:8px; }
+.art-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #eee;
+  display: block;
+}
+.art-thumb img { width: 100%; height: 100%; object-fit: cover; display:block; }
+.art-caption { font-size: 13px; color: #333; line-height: 1.2; }
+
+/* Modal content for artwork */
+.art-modal-img { max-width: 100%; height: auto; display:block; border-radius:6px; }
+.art-modal-desc { margin-top: 12px; color: #f7d181; font-size: 16px; }
