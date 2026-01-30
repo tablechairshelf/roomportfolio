@@ -419,15 +419,45 @@ const userContents = {
     <p><img src="/images/Artwork/PW.JPG" alt="Artwork" style="max-width:100%;height:auto;border-radius:6px;border-width:10px;border-color:black;border-style:solid"></p>
   `,
   "ComputerProjectsDisplay1_Raycaster_Hover": `
-    <h1>Computer and Engineering Projects</h1>
+    <h1>Computer and Website Projects</h1>
     <p>List of projects, links, and notes.</p>
     <ul>
-      <li><a href="https://github.com" target="_blank" rel="noopener">Project repo</a></li>
+      <li><a href="https://github.com/tablechairshelf" target="_blank" rel="noopener">Github</a></li>
     </ul>
+    <p>Website projects and links:</p>
+    <p>The main project I have worked on is this 3D portfolio website. This website is a 3D experience in which the user is able to explore a room that contains different sections of my portfolio. Each section is represented by a 3D object that the user can click on to zoom in and learn more about that section. The sections include music projects, artwork, computer and engineering projects, and other projects. Each section has a modal that contains more information about that section as well as links to external websites. The purpose of this project is to showcase my skills in 3D modeling and web development. I plan to continue to iterate on this project and add more features such as ambient music, more interactivity, and more sections to showcase.</p>
+    <br></br>
+    <h2>Ambient Productivity Environment</h2>
+    <p>Ambient background website in which the use is able to experience a calming, immersive environment. They are able to select which background they want, sort of like a screen saver. After this they have the option to put customizable widgets on the screen. These widgets are fully customizable and can be moved around the screen, resized, and deleted. Widgets include a pomodoro timer, a clock, a sketchpad, a notepad, and more to come. Some additions that I am planning to add is little pets that could run around the screen and be interactive, as well as add more inticing widgets. I would also add music to be more immersive. Overall the purpose is to be a space of productivity and will try to iterate and make it more interactive.</p>
+    <ul>link</ul>
+    <br></br>
+    <h2>Black Hole Physics Simulation</h2>
+    <p>Another website that I have developed is a black hole physics simulation, in which I also utilized vite and threejs to create a visualization of how a black hole would operate with different defining parameters. Some additions that I would love to add would be a particle system and more interactive elements. It would be where the user could click and send different objects allowing for the user to observe how a black hole would interact. Another could be its effects on differe celestial bodies. The math involving how blackholes manipulate light and matter would be interesting to try and visualize.</p>
+    <ul>link</ul>
+    <br></br>
+    <h2>3D Model Viewer</h2>
+    <p>A 3D model viewer website that allows users to upload and view 3D models in various formats. The viewer supports features such as rotation, zooming, and panning, as well as different rendering modes like wireframe and solid. Users can also change the background color and lighting settings to better visualize their models. Future plans for this project include adding support for animations, textures, and exporting models in different formats.</p>
+    <ul>link</ul>
+    <br></br>
+    <h2>Sound to MIDI Music Generator</h2>
+    <p>A web application that converts sound recordings into MIDI files. Users can upload audio files, and the application analyzes the sound to extract musical notes and rhythms, generating a corresponding MIDI file. This tool is useful for musicians and composers who want to transcribe melodies or create sheet music from audio recordings. I do have to concede though that this is currently not working and will need to be further debugged for improvement in the future. Currently it takes audio input and attempts to convert it to MIDI, but the conversion is not accurate. I want to allow it to go to backend analysis but it fails currently at the moment. Future enhancements may include support for different instruments, improved accuracy in note detection, and real-time audio processing.</p>
+    <ul>link</ul>
   `,
   "ComputerDisplay2_Raycaster_Hover": `
-    <h1>Other Projects</h1>
-    <p>Additional details and media.</p>
+    <h1>Engineering Projects</h1>
+    <p>Here is some of the cool physical and engineering projects that I have worked on. Currently I just have descriptions of what I am working on, but soon I will be adding photos and videos to showcase them more thoroughly.</p>
+    <br></br>
+    <h2>Autonomous Rover</h2>
+    <p>I have worked on an autonomous rover that is able to navigate through different terrains and environments. After hearing about the NASA perseverance rover mission, I thought it would be interesting to take an attempt at creating my own spin on a search and resue sort of mission for mars samples left on the surface. The rover is equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It uses a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. The rover is also designed to be modular, allowing for easy upgrades and modifications in the future. My goal is to create a rover that can be used for various applications such as search and rescue, exploration, and environmental monitoring.</p>
+    <br></br>
+    <h2>Adaptable Piano Keyboard for children with cerebral palsy and other motor disabilities</h2>
+    <p>This is a project that I have been working on for a while now. The goal of this project is to create an adaptable piano keyboard for children with cerebral palsy and other motor disabilities. The keyboard is designed to be easy to use and accessible for children with limited mobility. The keyboard features large, colorful keys that are easy to press, as well as a built-in speaker that allows children to hear the notes they are playing. The keyboard also has a variety of different modes and settings that can be adjusted to suit the needs of each individual child. My hope is that this keyboard will help children with disabilities to develop their musical skills and express themselves through music. I have gotten news recognition from my local newspaper and even am currently attempting a patent for it.</p>
+    <br></br>
+    <h2>Origami FLOWER bi-stable adaptable solar array</h2>
+    <p>I am currently working on this as a research project, something that I would like to present as FLOWER, or the Fault-taulerant Lightweight Origami With Error Recovery. Essentially, I want to create an origami module for space systems in which it can be transfigurable between different states, adapting to its environment. For now I will do 2 states, a solar array, and a blast shield, but for future iterations I could make multiple states through the use of origami. I would like to make it so that the module can be reconfigured in space, and even be able to self-repair if damaged. This would make it very useful for long-term space missions where maintenance is difficult or impossible.</p>
+    <br></br>
+    <h2>Quadruped Linear Actuator System for Dog leg</h2>
+    <p>This is a project that I have been working on for a while now. The goal of this project is to create a quadruped robot that can walk and run like a dog. The robot is designed to be lightweight and agile, with a linear actuator system that allows for smooth and precise movement. since linear actuator cost a lot of money, I took it into my own accords to develop and design my own 3d linear actuator for the legs. For future potential iterations, The robot could be equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It could use a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. My hope is that this robot will be able to assist in various applications such as search and rescue, exploration, and environmental monitoring.</p>
   `
 };
 
