@@ -207,7 +207,7 @@ const rimLight = new THREE.DirectionalLight(0xffffff, 1.8);
 (rimLight).position.set(-6, 4, -6);
 scene.add(rimLight);
 
-scene.background = new THREE.Color(0xf7f7f7);
+scene.background = new THREE.Color(0x292929);
 
 // Add a shadow-catching ground plane
 const ground = new THREE.Mesh(
