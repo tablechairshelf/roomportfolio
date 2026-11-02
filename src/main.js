@@ -410,8 +410,7 @@ const presets = {
 const userContents = {
   "MusicDisplay_Raycaster_Hover": `
     <h1>Music Works</h1>
-    <p>Short description about music projects. You can include <a href="https://example.com" target="_blank" rel="noopener">links</a> and images.</p>
-    <p><img src="/images/music-sample.jpg" alt="Music" style="max-width:100%;height:auto;border-radius:6px"></p>
+    <p>This is a collection of music projects that I have worked on over the years. It includes original compositions. The music is available for listening, I hope you enjoy it!</p>
   `,
   "ArtworkDisplay_Raycaster_Hover": `
     <h1>Art Pieces</h1>
@@ -421,40 +420,35 @@ const userContents = {
   "ComputerProjectsDisplay1_Raycaster_Hover": `
     <h1>Computer and Website Projects</h1>
     <p>List of projects, links, and notes.</p>
-    <ul>
-      <li><a href="https://github.com/tablechairshelf" target="_blank" rel="noopener">Github</a></li>
-    </ul>
+    <br></br>
+    
     <p>Website projects and links:</p>
     <p>The main project I have worked on is this 3D portfolio website. This website is a 3D experience in which the user is able to explore a room that contains different sections of my portfolio. Each section is represented by a 3D object that the user can click on to zoom in and learn more about that section. The sections include music projects, artwork, computer and engineering projects, and other projects. Each section has a modal that contains more information about that section as well as links to external websites. The purpose of this project is to showcase my skills in 3D modeling and web development. I plan to continue to iterate on this project and add more features such as ambient music, more interactivity, and more sections to showcase.</p>
     <br></br>
+    <h2>CastaBookings</h2>
+    <p>A smart booking platform for managing and scheduling appointments for many different businesseswith ease, made as an saas application fully deployed and currently searching for users and clients. Currently, we are trying to expand our user base towards small and medium-sized local businesses in our areas that could really use a booking solution.</p>
+    <br></br>
     <h2>Ambient Productivity Environment</h2>
     <p>Ambient background website in which the use is able to experience a calming, immersive environment. They are able to select which background they want, sort of like a screen saver. After this they have the option to put customizable widgets on the screen. These widgets are fully customizable and can be moved around the screen, resized, and deleted. Widgets include a pomodoro timer, a clock, a sketchpad, a notepad, and more to come. Some additions that I am planning to add is little pets that could run around the screen and be interactive, as well as add more inticing widgets. I would also add music to be more immersive. Overall the purpose is to be a space of productivity and will try to iterate and make it more interactive.</p>
-    <ul>link</ul>
+    
     <br></br>
     <h2>Black Hole Physics Simulation</h2>
     <p>Another website that I have developed is a black hole physics simulation, in which I also utilized vite and threejs to create a visualization of how a black hole would operate with different defining parameters. Some additions that I would love to add would be a particle system and more interactive elements. It would be where the user could click and send different objects allowing for the user to observe how a black hole would interact. Another could be its effects on differe celestial bodies. The math involving how blackholes manipulate light and matter would be interesting to try and visualize.</p>
-    <ul>link</ul>
-    <br></br>
-    <h2>3D Model Viewer</h2>
-    <p>A 3D model viewer website that allows users to upload and view 3D models in various formats. The viewer supports features such as rotation, zooming, and panning, as well as different rendering modes like wireframe and solid. Users can also change the background color and lighting settings to better visualize their models. Future plans for this project include adding support for animations, textures, and exporting models in different formats.</p>
-    <ul>link</ul>
-    <br></br>
-    <h2>Sound to MIDI Music Generator</h2>
-    <p>A web application that converts sound recordings into MIDI files. Users can upload audio files, and the application analyzes the sound to extract musical notes and rhythms, generating a corresponding MIDI file. This tool is useful for musicians and composers who want to transcribe melodies or create sheet music from audio recordings. I do have to concede though that this is currently not working and will need to be further debugged for improvement in the future. Currently it takes audio input and attempts to convert it to MIDI, but the conversion is not accurate. I want to allow it to go to backend analysis but it fails currently at the moment. Future enhancements may include support for different instruments, improved accuracy in note detection, and real-time audio processing.</p>
-    <ul>link</ul>
+    
+    
   `,
   "ComputerDisplay2_Raycaster_Hover": `
     <h1>Engineering Projects</h1>
     <p>Here is some of the cool physical and engineering projects that I have worked on. Currently I just have descriptions of what I am working on, but soon I will be adding photos and videos to showcase them more thoroughly.</p>
     <br></br>
     <h2>Autonomous Rover</h2>
-    <p>I have worked on an autonomous rover that is able to navigate through different terrains and environments. After hearing about the NASA perseverance rover mission, I thought it would be interesting to take an attempt at creating my own spin on a search and resue sort of mission for mars samples left on the surface. The rover is equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It uses a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. The rover is also designed to be modular, allowing for easy upgrades and modifications in the future. My goal is to create a rover that can be used for various applications such as search and rescue, exploration, and environmental monitoring.</p>
+    <p>I am currently working on an autonomous rover that is able to navigate through different terrains and environments. Inspired by childhood robots and their design, I want to make a rover with emotive expression and personality. I also want it to be responsive and maybe have talkative capabilities. The rover will be equipped with various sensors such as cameras and ultrasonic sensors to help it perceive its surroundings. It uses a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. The rover is also designed to be modular, allowing for easy upgrades and modifications in the future. My goal is to create a rover that can be used for various applications in a more engaging and emotive way.</p>
     <br></br>
     <h2>Adaptable Piano Keyboard for children with cerebral palsy and other motor disabilities</h2>
-    <p>This is a project that I have been working on for a while now. The goal of this project is to create an adaptable piano keyboard for children with cerebral palsy and other motor disabilities. The keyboard is designed to be easy to use and accessible for children with limited mobility. The keyboard features large, colorful keys that are easy to press, as well as a built-in speaker that allows children to hear the notes they are playing. The keyboard also has a variety of different modes and settings that can be adjusted to suit the needs of each individual child. My hope is that this keyboard will help children with disabilities to develop their musical skills and express themselves through music. I have gotten news recognition from my local newspaper and even am currently attempting a patent for it.</p>
+    <p>This is a project that I find very endearing. The goal of this project was to create an adaptable piano keyboard for children with cerebral palsy and other motor disabilities. The keyboard is designed to be easy to use and accessible for children with limited mobility. The keyboard features large, colorful keys that are easy to press, as well as a built-in speaker that allows children to hear the notes they are playing. The keyboard also has a variety of different modes and settings that can be adjusted to suit the needs of each individual child. My hope is that this keyboard will help children with disabilities to develop their musical skills and express themselves through music. I have gotten news recognition from my local newspaper.</p>
     <br></br>
     <h2>Origami FLOWER bi-stable adaptable solar array</h2>
-    <p>I am currently working on this as a research project, something that I would like to present as FLOWER, or the Fault-taulerant Lightweight Origami With Error Recovery. Essentially, I want to create an origami module for space systems in which it can be transfigurable between different states, adapting to its environment. For now I will do 2 states, a solar array, and a blast shield, but for future iterations I could make multiple states through the use of origami. I would like to make it so that the module can be reconfigured in space, and even be able to self-repair if damaged. This would make it very useful for long-term space missions where maintenance is difficult or impossible.</p>
+    <p>I worked on this as an AP research project, something that I would like to present as FLOWER, or the Fault-taulerant Lightweight Origami With Error Recovery. Essentially, I wanted to create an origami module for space systems in which it can be transfigurable between different states, adapting to its environment. For this project I did 2 states, a solar array, and a blast shield, but for future iterations I could make multiple states through the use of origami. I wanted to make it so that the module can be reconfigured in space, and even be able to self-repair if damaged. This would make it very useful for long-term space missions where maintenance is difficult or impossible.</p>
     <br></br>
     <h2>Quadruped Linear Actuator System for Dog leg</h2>
     <p>This is a project that I have been working on for a while now. The goal of this project is to create a quadruped robot that can walk and run like a dog. The robot is designed to be lightweight and agile, with a linear actuator system that allows for smooth and precise movement. since linear actuator cost a lot of money, I took it into my own accords to develop and design my own 3d linear actuator for the legs. For future potential iterations, The robot could be equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It could use a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. My hope is that this robot will be able to assist in various applications such as search and rescue, exploration, and environmental monitoring.</p>
@@ -498,16 +492,17 @@ function showModalFor(name) {
   const title = document.getElementById('zoom-modal-title');
   const content = document.getElementById('zoom-modal-content');
   if (!overlay || !title || !content) return;
+  // only objects with content (screens, tablet, music book) get a modal; others (e.g. posters) just zoom
+  if (!userContents[name]) return;
   // do not show the raw object name as the title; leave header hidden
   title.textContent = '';
   overlay.setAttribute('data-for', name);
   // render HTML content (allows links, images, formatting)
   if (name === 'ArtworkDisplay_Raycaster_Hover') {
     // build gallery inside modal rather than showing the page grid
-    content.innerHTML = `\n      <h1>Art Pieces</h1>\n      <div id="modal-art-grid" class="art-grid modal-art-grid"></div>`;
-    // populate gallery
-    const modalGrid = document.getElementById('modal-art-grid');
-    if (modalGrid) buildArtworkGallery(modalGrid);
+    // reuse the cached gallery so images aren't re-requested/re-decoded on every open
+    content.innerHTML = '';
+    content.appendChild(getArtworkGallery());
   } else {
     content.innerHTML = userContents[name] || '';
   }
@@ -524,6 +519,7 @@ function showModalFor(name) {
 function hideModal() {
   const overlay = document.getElementById('zoom-modal-overlay');
   if (!overlay) return;
+  closeArtLightbox();
   overlay.classList.add('hidden');
   overlay.setAttribute('aria-hidden', 'true');
   overlay.removeAttribute('data-for');
@@ -720,13 +716,18 @@ window.addEventListener('click', (e) => {
     // cast and see if we clicked the currently zoomed object
     raycaster.setFromCamera(pointer, camera);
     const hitsWhileZoomed = raycaster.intersectObjects(raycasterObjects);
+    let sourceWhile = null;
     if (hitsWhileZoomed && hitsWhileZoomed.length > 0) {
       const pickedWhileZoomed = hitsWhileZoomed[0].object;
-      const sourceWhile = pickedWhileZoomed.userData && pickedWhileZoomed.userData.sourceObject ? pickedWhileZoomed.userData.sourceObject : pickedWhileZoomed;
+      sourceWhile = pickedWhileZoomed.userData && pickedWhileZoomed.userData.sourceObject ? pickedWhileZoomed.userData.sourceObject : pickedWhileZoomed;
       if (sourceWhile && currentZoomTarget && sourceWhile === currentZoomTarget && !isModalOpen) {
         // open modal for this object
         showModalFor(currentZoomTarget.name);
       }
+    }
+    // objects without a modal (e.g. posters) have no close button, so clicking off them zooms back out
+    if (currentZoomTarget && !userContents[currentZoomTarget.name] && sourceWhile !== currentZoomTarget) {
+      exitZoom();
     }
     return;
   }
@@ -772,17 +773,60 @@ function niceTitle(filename) {
   return filename.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
 }
 
-function openArtModal(src, title, desc) {
-  const overlay = document.getElementById('zoom-modal-overlay');
-  const content = document.getElementById('zoom-modal-content');
-  const modalEl = document.getElementById('zoom-modal');
-  if (!overlay || !content) return;
-  content.innerHTML = `<img class="art-modal-img" src="/images/Artwork/${src}" alt="${title}"><p class="art-modal-desc">${desc || ''}</p>`;
-  if (modalEl) modalEl.classList.add('no-header');
-  overlay.classList.remove('hidden');
-  overlay.setAttribute('aria-hidden', 'false');
-  isModalOpen = true;
-  try { pauseRendering(); } catch (e) {}
+// optimized versions are generated by `npm run optimize-art`
+function artImagePath(filename, size) {
+  return `/images/Artwork/${size}/${filename.replace(/\.[^/.]+$/, '')}.webp`;
+}
+
+// full-screen lightbox shown above the gallery modal; clicking anywhere returns to the gallery
+function createArtLightbox() {
+  const lightbox = document.createElement('div');
+  lightbox.id = 'art-lightbox';
+  lightbox.className = 'art-lightbox hidden';
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightbox.innerHTML = `<img class="art-lightbox-img" alt=""><div class="art-lightbox-caption"></div>`;
+  lightbox.addEventListener('click', (e) => { e.stopPropagation(); closeArtLightbox(); });
+  document.body.appendChild(lightbox);
+  return lightbox;
+}
+const artLightbox = createArtLightbox();
+
+function openArtLightbox(fn, title) {
+  const img = artLightbox.querySelector('.art-lightbox-img');
+  // show the already-loaded thumbnail immediately, then swap in the large version
+  img.src = artImagePath(fn, 'thumbs');
+  const large = new Image();
+  large.onload = () => { if (img.dataset.fn === fn) img.src = large.src; };
+  large.src = artImagePath(fn, 'large');
+  img.dataset.fn = fn;
+  img.alt = title;
+  artLightbox.querySelector('.art-lightbox-caption').textContent = title;
+  artLightbox.classList.remove('hidden');
+  artLightbox.setAttribute('aria-hidden', 'false');
+}
+
+function closeArtLightbox() {
+  artLightbox.classList.add('hidden');
+  artLightbox.setAttribute('aria-hidden', 'true');
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (!artLightbox.classList.contains('hidden')) closeArtLightbox();
+  else if (isZoomed && !isModalOpen && !isZooming) exitZoom();
+});
+
+let artworkGallery = null;
+function getArtworkGallery() {
+  if (artworkGallery) return artworkGallery;
+  artworkGallery = document.createElement('div');
+  artworkGallery.innerHTML = `<h1>Art Pieces</h1>`;
+  const grid = document.createElement('div');
+  grid.id = 'modal-art-grid';
+  grid.className = 'art-grid modal-art-grid';
+  artworkGallery.appendChild(grid);
+  buildArtworkGallery(grid);
+  return artworkGallery;
 }
 
 function buildArtworkGallery(container) {
@@ -792,7 +836,6 @@ function buildArtworkGallery(container) {
   grid.innerHTML = '';
   artworkImages.forEach((fn) => {
     const title = niceTitle(fn);
-    const desc = '';
     const item = document.createElement('div');
     item.className = 'art-item';
 
@@ -802,10 +845,10 @@ function buildArtworkGallery(container) {
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.src = `/images/Artwork/${fn}`;
+    img.src = artImagePath(fn, 'thumbs');
     img.alt = title;
     btn.appendChild(img);
-    btn.addEventListener('click', (e) => { e.stopPropagation(); openArtModal(fn, title, desc); });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); openArtLightbox(fn, title); });
 
     const cap = document.createElement('div');
     cap.className = 'art-caption';

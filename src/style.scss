@@ -131,6 +131,29 @@
 .art-thumb img { width: 100%; height: 100%; object-fit: cover; display:block; }
 .art-caption { font-size: 13px; color: #333; line-height: 1.2; }
 
-/* Modal content for artwork */
-.art-modal-img { max-width: 100%; height: auto; display:block; border-radius:6px; }
-.art-modal-desc { margin-top: 12px; color: #f7d181; font-size: 16px; }
+.art-thumb { cursor: zoom-in; border: none; padding: 0; }
+
+/* Full-screen artwork lightbox (sits above the gallery modal) */
+.art-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+  animation: art-lightbox-in 0.2s ease-out;
+}
+.art-lightbox-img {
+  max-width: 100%;
+  max-height: calc(100vh - 90px);
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+.art-lightbox-caption { color: #f7d181; font-size: 18px; text-align: center; }
+@keyframes art-lightbox-in { from { opacity: 0; } to { opacity: 1; } }
