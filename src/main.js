@@ -14,6 +14,12 @@ const sizes = {
 const raycasterObjects = [];
 let intersects = [];
 let currentHoveredObject = null;
+// true while the intro modal is up; blocks hover, clicks, and orbiting
+let introActive = true;
+// floating labels above clickable objects: { el, anchor (world-space Vector3) }
+const portfolioTags = [];
+const tagLayer = document.getElementById('portfolio-tags');
+const _tagProj = new THREE.Vector3();
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -127,6 +133,7 @@ loader.load('/models/RoomPortfoliov76-v1.glb', (glb) => {
     }
   });
   scene.add(model);
+  createPortfolioTags(model);
 
   // Debug: list objects that include the Raycaster/Hover tags and report their type
   console.groupCollapsed('Raycaster/hover debug');
@@ -231,6 +238,8 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.update();
 controls.target.set(0.7950616105872242, 7.29884438592324, 1.1933200399271437);
+// stays disabled until the intro modal is dismissed
+controls.enabled = false;
 
 //Event listeners for resizing the canvas
 window.addEventListener('resize', () => {
@@ -337,7 +346,7 @@ const render = () => {
 
   raycaster.setFromCamera(pointer, camera);
 
-  intersects = raycaster.intersectObjects(raycasterObjects);
+  intersects = introActive ? [] : raycaster.intersectObjects(raycasterObjects);
 
   for (let i = 0; i < intersects.length; i++) {
   }
@@ -373,9 +382,52 @@ const render = () => {
 
 
 
+  updatePortfolioTags();
+
   renderer.render(scene, camera);
   renderAnimId = window.requestAnimationFrame(render);
 };
+
+// build one label per entry in tagLabels, anchored just above the object's bounding box
+function createPortfolioTags(root) {
+  if (!tagLayer) return;
+  root.updateMatrixWorld(true);
+  Object.entries(tagLabels).forEach(([name, label]) => {
+    const obj = root.getObjectByName(name);
+    if (!obj) { console.warn('No object found for tag:', name); return; }
+    const box = new THREE.Box3().setFromObject(obj);
+    const anchor = new THREE.Vector3();
+    box.getCenter(anchor);
+    anchor.y = box.max.y + TAG_HEIGHT_OFFSET;
+
+    const el = document.createElement('div');
+    el.className = 'portfolio-tag';
+    el.innerHTML = `<span class="portfolio-tag-label"></span>`;
+    el.firstChild.textContent = label;
+    tagLayer.appendChild(el);
+    portfolioTags.push({ el, anchor });
+  });
+}
+
+// project each anchor to screen space so the labels always face the camera
+function updatePortfolioTags() {
+  // controls.update() moved the camera, but its view matrix is only refreshed inside
+  // renderer.render(); refresh it now so tags use this frame's camera, not last frame's
+  camera.updateMatrixWorld();
+  for (const tag of portfolioTags) {
+    _tagProj.copy(tag.anchor).project(camera);
+    // z > 1 means the point is behind the camera
+    if (_tagProj.z > 1) { tag.el.style.display = 'none'; continue; }
+    const x = (_tagProj.x * 0.5 + 0.5) * sizes.width;
+    const y = (-_tagProj.y * 0.5 + 0.5) * sizes.height;
+    tag.el.style.display = '';
+    tag.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`;
+  }
+}
+
+function setTagsVisible(visible) {
+  if (tagLayer) tagLayer.classList.toggle('tags-hidden', !visible);
+}
 
 render();
 
@@ -386,6 +438,15 @@ let isZoomed = false;
 let currentZoomTarget = null;
 let isZooming = false;
 let isModalOpen = false;
+// text shown in the floating tag above each clickable object
+const tagLabels = {
+  "MusicDisplay_Raycaster_Hover": "Music",
+  "ArtworkDisplay_Raycaster_Hover": "Artwork",
+  "ComputerProjectsDisplay1_Raycaster_Hover": "Computer Projects",
+  "ComputerDisplay2_Raycaster_Hover": "Engineering Projects"
+};
+// world-space gap between the top of an object and its tag
+const TAG_HEIGHT_OFFSET = 0.3;
 // Per-object camera & control presets (provided coordinates)
 const presets = {
   "MusicDisplay_Raycaster_Hover": {
@@ -410,50 +471,218 @@ const presets = {
 const userContents = {
   "MusicDisplay_Raycaster_Hover": `
     <h1>Music Works</h1>
-    <p>This is a collection of music projects that I have worked on over the years. It includes original compositions. The music is available for listening, I hope you enjoy it!</p>
+    <p>This is a collection of music projects that I have worked on over the years. It includes original compositions. Music will be soon available for listening on this website!</p>
   `,
   "ArtworkDisplay_Raycaster_Hover": `
     <h1>Art Pieces</h1>
     <p>This is a collection of digital and physical artworks, or anything artistry related (not including music) Mainly art pieces that I have done over the years.</p>
     <p><img src="/images/Artwork/PW.JPG" alt="Artwork" style="max-width:100%;height:auto;border-radius:6px;border-width:10px;border-color:black;border-style:solid"></p>
   `,
-  "ComputerProjectsDisplay1_Raycaster_Hover": `
-    <h1>Computer and Website Projects</h1>
-    <p>List of projects, links, and notes.</p>
-    <br></br>
-    
-    <p>Website projects and links:</p>
-    <p>The main project I have worked on is this 3D portfolio website. This website is a 3D experience in which the user is able to explore a room that contains different sections of my portfolio. Each section is represented by a 3D object that the user can click on to zoom in and learn more about that section. The sections include music projects, artwork, computer and engineering projects, and other projects. Each section has a modal that contains more information about that section as well as links to external websites. The purpose of this project is to showcase my skills in 3D modeling and web development. I plan to continue to iterate on this project and add more features such as ambient music, more interactivity, and more sections to showcase.</p>
-    <br></br>
-    <h2>CastaBookings</h2>
-    <p>A smart booking platform for managing and scheduling appointments for many different businesseswith ease, made as an saas application fully deployed and currently searching for users and clients. Currently, we are trying to expand our user base towards small and medium-sized local businesses in our areas that could really use a booking solution.</p>
-    <br></br>
-    <h2>Ambient Productivity Environment</h2>
-    <p>Ambient background website in which the use is able to experience a calming, immersive environment. They are able to select which background they want, sort of like a screen saver. After this they have the option to put customizable widgets on the screen. These widgets are fully customizable and can be moved around the screen, resized, and deleted. Widgets include a pomodoro timer, a clock, a sketchpad, a notepad, and more to come. Some additions that I am planning to add is little pets that could run around the screen and be interactive, as well as add more inticing widgets. I would also add music to be more immersive. Overall the purpose is to be a space of productivity and will try to iterate and make it more interactive.</p>
-    
-    <br></br>
-    <h2>Black Hole Physics Simulation</h2>
-    <p>Another website that I have developed is a black hole physics simulation, in which I also utilized vite and threejs to create a visualization of how a black hole would operate with different defining parameters. Some additions that I would love to add would be a particle system and more interactive elements. It would be where the user could click and send different objects allowing for the user to observe how a black hole would interact. Another could be its effects on differe celestial bodies. The math involving how blackholes manipulate light and matter would be interesting to try and visualize.</p>
-    
-    
-  `,
-  "ComputerDisplay2_Raycaster_Hover": `
-    <h1>Engineering Projects</h1>
-    <p>Here is some of the cool physical and engineering projects that I have worked on. Currently I just have descriptions of what I am working on, but soon I will be adding photos and videos to showcase them more thoroughly.</p>
-    <br></br>
-    <h2>Autonomous Rover</h2>
-    <p>I am currently working on an autonomous rover that is able to navigate through different terrains and environments. Inspired by childhood robots and their design, I want to make a rover with emotive expression and personality. I also want it to be responsive and maybe have talkative capabilities. The rover will be equipped with various sensors such as cameras and ultrasonic sensors to help it perceive its surroundings. It uses a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. The rover is also designed to be modular, allowing for easy upgrades and modifications in the future. My goal is to create a rover that can be used for various applications in a more engaging and emotive way.</p>
-    <br></br>
-    <h2>Adaptable Piano Keyboard for children with cerebral palsy and other motor disabilities</h2>
-    <p>This is a project that I find very endearing. The goal of this project was to create an adaptable piano keyboard for children with cerebral palsy and other motor disabilities. The keyboard is designed to be easy to use and accessible for children with limited mobility. The keyboard features large, colorful keys that are easy to press, as well as a built-in speaker that allows children to hear the notes they are playing. The keyboard also has a variety of different modes and settings that can be adjusted to suit the needs of each individual child. My hope is that this keyboard will help children with disabilities to develop their musical skills and express themselves through music. I have gotten news recognition from my local newspaper.</p>
-    <br></br>
-    <h2>Origami FLOWER bi-stable adaptable solar array</h2>
-    <p>I worked on this as an AP research project, something that I would like to present as FLOWER, or the Fault-taulerant Lightweight Origami With Error Recovery. Essentially, I wanted to create an origami module for space systems in which it can be transfigurable between different states, adapting to its environment. For this project I did 2 states, a solar array, and a blast shield, but for future iterations I could make multiple states through the use of origami. I wanted to make it so that the module can be reconfigured in space, and even be able to self-repair if damaged. This would make it very useful for long-term space missions where maintenance is difficult or impossible.</p>
-    <br></br>
-    <h2>Quadruped Linear Actuator System for Dog leg</h2>
-    <p>This is a project that I have been working on for a while now. The goal of this project is to create a quadruped robot that can walk and run like a dog. The robot is designed to be lightweight and agile, with a linear actuator system that allows for smooth and precise movement. since linear actuator cost a lot of money, I took it into my own accords to develop and design my own 3d linear actuator for the legs. For future potential iterations, The robot could be equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It could use a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. My hope is that this robot will be able to assist in various applications such as search and rescue, exploration, and environmental monitoring.</p>
-  `
 };
+
+// Grid-style sections: each project is a card in the modal; clicking a card opens its detail view.
+// To add a project, append another object to `projects`. Swap `thumbnail` / `images` for real files
+// in /public/images/Projects/. `links` takes { label, url } entries, e.g. { label: 'GitHub', url: 'https://...' }.
+const PROJECT_PLACEHOLDER = '/images/Projects/placeholder.svg';
+const projectSections = {
+  "ComputerProjectsDisplay1_Raycaster_Hover": {
+    title: 'Computer and Website Projects',
+    intro: 'A collection of websites and software projects I have built. Click a project to learn more.',
+    projects: [
+      {
+        title: '3D Room Portfolio',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'This website! An explorable 3D room that holds my portfolio.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>The main project I have worked on is this 3D portfolio website. This website is a 3D experience in which the user is able to explore a room that contains different sections of my portfolio. Each section is represented by a 3D object that the user can click on to zoom in and learn more about that section. The sections include music projects, artwork, computer and engineering projects, and other projects. Each section has a modal that contains more information about that section as well as links to external websites. The purpose of this project is to showcase my skills in 3D modeling and web development. I plan to continue to iterate on this project and add more features such as ambient music, more interactivity, and more sections to showcase.</p>
+        `
+      },
+      {
+        title: 'CastaBookings',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'A SaaS booking platform for scheduling appointments at local businesses.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>A smart booking platform for managing and scheduling appointments for many different businesseswith ease, made as an saas application fully deployed and currently searching for users and clients. Currently, we are trying to expand our user base towards small and medium-sized local businesses in our areas that could really use a booking solution.</p>
+        `
+      },
+      {
+        title: 'Ambient Productivity Environment',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'A calming background space with movable, customizable productivity widgets.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>Ambient background website in which the use is able to experience a calming, immersive environment. They are able to select which background they want, sort of like a screen saver. After this they have the option to put customizable widgets on the screen. These widgets are fully customizable and can be moved around the screen, resized, and deleted. Widgets include a pomodoro timer, a clock, a sketchpad, a notepad, and more to come. Some additions that I am planning to add is little pets that could run around the screen and be interactive, as well as add more inticing widgets. I would also add music to be more immersive. Overall the purpose is to be a space of productivity and will try to iterate and make it more interactive.</p>
+        `
+      },
+      {
+        title: 'Black Hole Physics Simulation',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'A Three.js visualization of how a black hole behaves with different parameters.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>Another website that I have developed is a black hole physics simulation, in which I also utilized vite and threejs to create a visualization of how a black hole would operate with different defining parameters. Some additions that I would love to add would be a particle system and more interactive elements. It would be where the user could click and send different objects allowing for the user to observe how a black hole would interact. Another could be its effects on differe celestial bodies. The math involving how blackholes manipulate light and matter would be interesting to try and visualize.</p>
+        `
+      }
+    ]
+  },
+  "ComputerDisplay2_Raycaster_Hover": {
+    title: 'Engineering Projects',
+    intro: 'Here is some of the cool physical and engineering projects that I have worked on. Photos and videos are coming soon. Click a project to learn more.',
+    projects: [
+      {
+        title: 'Autonomous Rover',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'An emotive, modular rover that navigates terrain using sensors and computer vision.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>I am currently working on an autonomous rover that is able to navigate through different terrains and environments. Inspired by childhood robots and their design, I want to make a rover with emotive expression and personality. I also want it to be responsive and maybe have talkative capabilities. The rover will be equipped with various sensors such as cameras and ultrasonic sensors to help it perceive its surroundings. It uses a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. The rover is also designed to be modular, allowing for easy upgrades and modifications in the future. My goal is to create a rover that can be used for various applications in a more engaging and emotive way.</p>
+        `
+      },
+      {
+        title: 'Adaptable Piano Keyboard',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'An accessible keyboard for children with cerebral palsy and other motor disabilities.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>This is a project that I find very endearing. The goal of this project was to create an adaptable piano keyboard for children with cerebral palsy and other motor disabilities. The keyboard is designed to be easy to use and accessible for children with limited mobility. The keyboard features large, colorful keys that are easy to press, as well as a built-in speaker that allows children to hear the notes they are playing. The keyboard also has a variety of different modes and settings that can be adjusted to suit the needs of each individual child. My hope is that this keyboard will help children with disabilities to develop their musical skills and express themselves through music. I have gotten news recognition from my local newspaper.</p>
+        `
+      },
+      {
+        title: 'Origami FLOWER Solar Array',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'A bi-stable origami module for space that transforms between a solar array and a blast shield.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>I worked on this as an AP research project, something that I would like to present as FLOWER, or the Fault-taulerant Lightweight Origami With Error Recovery. Essentially, I wanted to create an origami module for space systems in which it can be transfigurable between different states, adapting to its environment. For this project I did 2 states, a solar array, and a blast shield, but for future iterations I could make multiple states through the use of origami. I wanted to make it so that the module can be reconfigured in space, and even be able to self-repair if damaged. This would make it very useful for long-term space missions where maintenance is difficult or impossible.</p>
+        `
+      },
+      {
+        title: 'Quadruped Linear Actuator Leg',
+        thumbnail: PROJECT_PLACEHOLDER,
+        summary: 'Custom 3D-printed linear actuators for a dog-like walking robot.',
+        images: [PROJECT_PLACEHOLDER],
+        links: [],
+        details: `
+          <p>This is a project that I have been working on for a while now. The goal of this project is to create a quadruped robot that can walk and run like a dog. The robot is designed to be lightweight and agile, with a linear actuator system that allows for smooth and precise movement. since linear actuator cost a lot of money, I took it into my own accords to develop and design my own 3d linear actuator for the legs. For future potential iterations, The robot could be equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It could use a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. My hope is that this robot will be able to assist in various applications such as search and rescue, exploration, and environmental monitoring.</p>
+        `
+      }
+    ]
+  }
+};
+
+function hasModalContent(name) {
+  return !!(userContents[name] || projectSections[name]);
+}
+
+// which section's grid is showing, and whether a project's detail view is open on top of it
+let activeProjectSection = null;
+let projectDetailOpen = false;
+let projectGridScroll = 0;
+
+function renderProjectGrid(name) {
+  const content = document.getElementById('zoom-modal-content');
+  const section = projectSections[name];
+  if (!content || !section) return;
+  activeProjectSection = name;
+  projectDetailOpen = false;
+
+  content.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'project-view';
+  wrap.innerHTML = `<h1></h1><p class="project-intro"></p><div class="project-grid"></div>`;
+  wrap.querySelector('h1').textContent = section.title;
+  wrap.querySelector('.project-intro').textContent = section.intro;
+  const grid = wrap.querySelector('.project-grid');
+
+  section.projects.forEach((project, i) => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'project-card';
+    card.setAttribute('aria-label', `Open project ${project.title}`);
+    card.innerHTML = `
+      <div class="project-card-thumb"><img loading="lazy" decoding="async"></div>
+      <div class="project-card-body"><h3></h3><p></p></div>
+    `;
+    const img = card.querySelector('img');
+    img.src = project.thumbnail || PROJECT_PLACEHOLDER;
+    img.alt = project.title;
+    card.querySelector('h3').textContent = project.title;
+    card.querySelector('p').textContent = project.summary;
+    card.addEventListener('click', (e) => { e.stopPropagation(); openProjectDetail(name, i, card); });
+    grid.appendChild(card);
+  });
+
+  content.appendChild(wrap);
+  content.scrollTop = projectGridScroll;
+}
+
+function openProjectDetail(name, index, card) {
+  const content = document.getElementById('zoom-modal-content');
+  const project = projectSections[name] && projectSections[name].projects[index];
+  if (!content || !project) return;
+  projectGridScroll = content.scrollTop;
+  projectDetailOpen = true;
+
+  // grow the detail view out of the clicked card's position
+  let origin = 'center top';
+  if (card) {
+    const c = content.getBoundingClientRect();
+    const r = card.getBoundingClientRect();
+    origin = `${r.left + r.width / 2 - c.left}px ${r.top + r.height / 2 - c.top}px`;
+  }
+
+  content.innerHTML = '';
+  content.scrollTop = 0;
+  const detail = document.createElement('div');
+  detail.className = 'project-detail';
+  detail.style.transformOrigin = origin;
+  detail.innerHTML = `
+    <button type="button" class="project-back">&larr; All projects</button>
+    <h1></h1>
+    <div class="project-detail-images"></div>
+    <div class="project-detail-body"></div>
+    <div class="project-detail-links"></div>
+  `;
+  detail.querySelector('h1').textContent = project.title;
+  detail.querySelector('.project-back').addEventListener('click', (e) => { e.stopPropagation(); renderProjectGrid(name); });
+
+  const images = detail.querySelector('.project-detail-images');
+  (project.images || []).forEach((src) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = project.title;
+    images.appendChild(img);
+  });
+
+  detail.querySelector('.project-detail-body').innerHTML = project.details || '';
+
+  const links = detail.querySelector('.project-detail-links');
+  if (project.links && project.links.length) {
+    links.innerHTML = '<h2>Links</h2><ul></ul>';
+    const list = links.querySelector('ul');
+    project.links.forEach(({ label, url }) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = label;
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  }
+
+  content.appendChild(detail);
+}
 
 // create modal overlay (hidden until used). Prefer static HTML in index.html; otherwise create fallback elements.
 function createModal() {
@@ -493,7 +722,7 @@ function showModalFor(name) {
   const content = document.getElementById('zoom-modal-content');
   if (!overlay || !title || !content) return;
   // only objects with content (screens, tablet, music book) get a modal; others (e.g. posters) just zoom
-  if (!userContents[name]) return;
+  if (!hasModalContent(name)) return;
   // do not show the raw object name as the title; leave header hidden
   title.textContent = '';
   overlay.setAttribute('data-for', name);
@@ -503,6 +732,9 @@ function showModalFor(name) {
     // reuse the cached gallery so images aren't re-requested/re-decoded on every open
     content.innerHTML = '';
     content.appendChild(getArtworkGallery());
+  } else if (projectSections[name]) {
+    projectGridScroll = 0;
+    renderProjectGrid(name);
   } else {
     content.innerHTML = userContents[name] || '';
   }
@@ -520,6 +752,8 @@ function hideModal() {
   const overlay = document.getElementById('zoom-modal-overlay');
   if (!overlay) return;
   closeArtLightbox();
+  activeProjectSection = null;
+  projectDetailOpen = false;
   overlay.classList.add('hidden');
   overlay.setAttribute('aria-hidden', 'true');
   overlay.removeAttribute('data-for');
@@ -558,7 +792,13 @@ createExitButton();
   }
   const closeBtn = document.getElementById('zoom-modal-close');
   if (closeBtn) {
-    closeBtn.addEventListener('click', (e) => { e.stopPropagation(); hideModal(); exitZoom(); });
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // from a project's detail view, X goes back to the grid; from the grid it closes the modal
+      if (projectDetailOpen && activeProjectSection) { renderProjectGrid(activeProjectSection); return; }
+      hideModal();
+      exitZoom();
+    });
   }
 }
 
@@ -567,6 +807,7 @@ function zoomToObject(sourceObject) {
   isZooming = true;
   isZoomed = true;
   currentZoomTarget = sourceObject;
+  setTagsVisible(false);
 
   // compute target center and size
   const box = new THREE.Box3().setFromObject(sourceObject);
@@ -631,6 +872,7 @@ function zoomToPreset(preset) {
   isZooming = true;
   isZoomed = true;
   controls.enabled = false;
+  setTagsVisible(false);
 
   gsap.killTweensOf(camera.position);
   gsap.killTweensOf(controls.target);
@@ -700,6 +942,7 @@ function exitZoom() {
       }
       isZoomed = false;
       currentZoomTarget = null;
+      setTagsVisible(true);
     }
   });
 }
@@ -707,6 +950,8 @@ function exitZoom() {
 
 // click handler to zoom into the 4 specific named items
 window.addEventListener('click', (e) => {
+  // the scene is locked while the intro modal is showing
+  if (introActive) return;
   // ignore clicks on the UI elements
   if (e.target && (e.target.id === 'zoom-exit-btn' || e.target.closest && e.target.closest('#zoom-modal'))) return;
   // if still zooming, ignore clicks
@@ -726,7 +971,7 @@ window.addEventListener('click', (e) => {
       }
     }
     // objects without a modal (e.g. posters) have no close button, so clicking off them zooms back out
-    if (currentZoomTarget && !userContents[currentZoomTarget.name] && sourceWhile !== currentZoomTarget) {
+    if (currentZoomTarget && !hasModalContent(currentZoomTarget.name) && sourceWhile !== currentZoomTarget) {
       exitZoom();
     }
     return;
@@ -762,6 +1007,48 @@ window.addEventListener('click', (e) => {
     zoomToObject(source);
   }
 });
+
+// --------------------- Intro modal ---------------------
+// the modal drops off screen while the background unblurs, then the scene is unlocked
+function dismissIntro() {
+  const overlay = document.getElementById('intro-overlay');
+  const modal = document.getElementById('intro-modal');
+  const btn = document.getElementById('intro-enter-btn');
+  if (!overlay || !modal) { introActive = false; controls.enabled = true; setTagsVisible(true); return; }
+  if (btn) btn.disabled = true;
+  // stop the CSS entrance animation so it doesn't fight the gsap transform
+  modal.style.animation = 'none';
+  overlay.classList.add('leaving');
+
+  gsap.timeline({
+    onComplete: () => {
+      overlay.remove();
+      introActive = false;
+      controls.enabled = true;
+      setTagsVisible(true);
+    }
+  })
+    // small lift before it drops, like it's being let go
+    .to(modal, { y: -18, rotation: -1.5, duration: 0.18, ease: 'power1.out' })
+    .to(modal, {
+      y: window.innerHeight + modal.offsetHeight,
+      rotation: 9,
+      duration: 0.9,
+      ease: 'power2.in'
+    });
+}
+
+{
+  const introBtn = document.getElementById('intro-enter-btn');
+  if (introBtn) {
+    introBtn.addEventListener('click', dismissIntro);
+    introBtn.focus();
+  } else {
+    introActive = false;
+    controls.enabled = true;
+    setTagsVisible(true);
+  }
+}
 
 //pick up video from start of draco
 // --------------------- Artwork gallery ---------------------
@@ -813,6 +1100,7 @@ function closeArtLightbox() {
 window.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
   if (!artLightbox.classList.contains('hidden')) closeArtLightbox();
+  else if (isModalOpen && projectDetailOpen && activeProjectSection) renderProjectGrid(activeProjectSection);
   else if (isZoomed && !isModalOpen && !isZooming) exitZoom();
 });
 

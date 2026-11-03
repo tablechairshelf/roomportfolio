@@ -16,6 +16,8 @@
 
     <div id="experience">
       <canvas id="experience-canvas" class="experience-canvas"></canvas>
+      <!-- Floating labels above clickable objects (positioned from src/main.js) -->
+      <div id="portfolio-tags" class="portfolio-tags tags-hidden" aria-hidden="true"></div>
     </div>
     <!-- Modal and exit button (styled via src/style.scss) -->
       <!-- Modal (exit button removed; modal close will exit zoom) -->
@@ -26,6 +28,36 @@
         </div>
         <button id="zoom-modal-close" class="zoom-modal-close" aria-label="Close">X</button>
         <div id="zoom-modal-content" class="zoom-modal-content" aria-live="polite"></div>
+      </div>
+    </div>
+    <!-- Intro modal shown on first load; blocks the scene until dismissed -->
+    <div id="intro-overlay" class="intro-overlay">
+      <div id="intro-modal" class="intro-modal" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+        <div class="intro-content">
+          <h1 id="intro-title">Welcome to my Room Portfolio</h1>
+          <p>
+            Hi, I'm Yahir Bernal! This website is a 3D room that holds my portfolio. Instead of scrolling
+            through pages, you can explore the room and click on objects to learn about my music, artwork,
+            computer projects, and engineering projects. Room inspired by Andrew Hoans room portfolio. All artwork, music, and 3D models are modeled by me. Enjoy exploring!
+          </p>
+
+          <h2>How it works</h2>
+          <ul>
+            <li><strong>Look around</strong> by clicking and dragging anywhere in the room.</li>
+            <li><strong>Zoom</strong> in and out with your scroll wheel or trackpad.</li>
+            <li><strong>Hover</strong> over objects. The ones that pop up are interactive.</li>
+            <li><strong>Click</strong> an interactive object to zoom in and open its section.</li>
+            <li><strong>Close</strong> a section with the X button to return to the full room view.</li>
+            <li>In the artwork section, <strong>click any piece</strong> to view it full size.</li>
+          </ul>
+
+          <h2>Heads up</h2>
+          <p class="intro-notice">
+            This website is still a work in progress! Some sections are unfinished, and content, visuals,
+            and features will keep changing as I continue to build it out.
+          </p>
+        </div>
+        <button id="intro-enter-btn" class="intro-enter-btn" type="button">ENTER THE ROOM</button>
       </div>
     </div>
     <script type="module" src="/src/main.js"></script>
