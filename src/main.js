@@ -484,6 +484,15 @@ const userContents = {
 // To add a project, append another object to `projects`. Swap `thumbnail` / `images` for real files
 // in /public/images/Projects/. `links` takes { label, url } entries, e.g. { label: 'GitHub', url: 'https://...' }.
 const PROJECT_PLACEHOLDER = '/images/Projects/placeholder.svg';
+const ambient='/images/Projects/ambientbackgrounds.png';
+const casta = '/images/Projects/castabookingthumbnail.png';
+const portfolio = '/images/Projects/portfolio thumbnail.png';
+const rover = '/images/Projects/rover.png';
+const echokeys = '/images/Projects/echokeys.jpeg';
+const lotus = '/images/Projects/lotus.png';
+const prospect = '/images/Projects/prospect.png';
+const miniCharolette = '/images/Projects/minicharolette.png';
+
 const projectSections = {
   "ComputerProjectsDisplay1_Raycaster_Hover": {
     title: 'Computer and Website Projects',
@@ -491,9 +500,9 @@ const projectSections = {
     projects: [
       {
         title: '3D Room Portfolio',
-        thumbnail: PROJECT_PLACEHOLDER,
+        thumbnail: portfolio,
         summary: 'This website! An explorable 3D room that holds my portfolio.',
-        images: [PROJECT_PLACEHOLDER],
+        images: [portfolio],
         links: [],
         details: `
           <p>The main project I have worked on is this 3D portfolio website. This website is a 3D experience in which the user is able to explore a room that contains different sections of my portfolio. Each section is represented by a 3D object that the user can click on to zoom in and learn more about that section. The sections include music projects, artwork, computer and engineering projects, and other projects. Each section has a modal that contains more information about that section as well as links to external websites. The purpose of this project is to showcase my skills in 3D modeling and web development. I plan to continue to iterate on this project and add more features such as ambient music, more interactivity, and more sections to showcase.</p>
@@ -501,9 +510,9 @@ const projectSections = {
       },
       {
         title: 'CastaBookings',
-        thumbnail: PROJECT_PLACEHOLDER,
+        thumbnail: casta,
         summary: 'A SaaS booking platform for scheduling appointments at local businesses.',
-        images: [PROJECT_PLACEHOLDER],
+        images: [casta],
         links: [],
         details: `
           <p>A smart booking platform for managing and scheduling appointments for many different businesseswith ease, made as an saas application fully deployed and currently searching for users and clients. Currently, we are trying to expand our user base towards small and medium-sized local businesses in our areas that could really use a booking solution.</p>
@@ -511,9 +520,9 @@ const projectSections = {
       },
       {
         title: 'Ambient Productivity Environment',
-        thumbnail: PROJECT_PLACEHOLDER,
+        thumbnail: ambient,
         summary: 'A calming background space with movable, customizable productivity widgets.',
-        images: [PROJECT_PLACEHOLDER],
+        images: [ambient],
         links: [],
         details: `
           <p>Ambient background website in which the use is able to experience a calming, immersive environment. They are able to select which background they want, sort of like a screen saver. After this they have the option to put customizable widgets on the screen. These widgets are fully customizable and can be moved around the screen, resized, and deleted. Widgets include a pomodoro timer, a clock, a sketchpad, a notepad, and more to come. Some additions that I am planning to add is little pets that could run around the screen and be interactive, as well as add more inticing widgets. I would also add music to be more immersive. Overall the purpose is to be a space of productivity and will try to iterate and make it more interactive.</p>
@@ -526,7 +535,7 @@ const projectSections = {
         images: [PROJECT_PLACEHOLDER],
         links: [],
         details: `
-          <p>Another website that I have developed is a black hole physics simulation, in which I also utilized vite and threejs to create a visualization of how a black hole would operate with different defining parameters. Some additions that I would love to add would be a particle system and more interactive elements. It would be where the user could click and send different objects allowing for the user to observe how a black hole would interact. Another could be its effects on differe celestial bodies. The math involving how blackholes manipulate light and matter would be interesting to try and visualize.</p>
+          <p>Another website that I have started developing is a black hole physics simulation, in which I want to utilize vite and threejs to create a visualization of how a black hole would operate with different defining parameters. Some additions that I would love to add would be a particle system and more interactive elements. It would be where the user could click and send different objects allowing for the user to observe how a black hole would interact. Another could be its effects on differe celestial bodies. The math involving how blackholes manipulate light and matter would be interesting to try and visualize.</p>
         `
       }
     ]
@@ -537,19 +546,19 @@ const projectSections = {
     projects: [
       {
         title: 'Autonomous Rover',
-        thumbnail: PROJECT_PLACEHOLDER,
+        thumbnail: rover,
         summary: 'An emotive, modular rover that navigates terrain using sensors and computer vision.',
-        images: [PROJECT_PLACEHOLDER],
+        images: [rover],
         links: [],
         details: `
           <p>I am currently working on an autonomous rover that is able to navigate through different terrains and environments. Inspired by childhood robots and their design, I want to make a rover with emotive expression and personality. I also want it to be responsive and maybe have talkative capabilities. The rover will be equipped with various sensors such as cameras and ultrasonic sensors to help it perceive its surroundings. It uses a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. The rover is also designed to be modular, allowing for easy upgrades and modifications in the future. My goal is to create a rover that can be used for various applications in a more engaging and emotive way.</p>
         `
       },
       {
-        title: 'Adaptable Piano Keyboard',
-        thumbnail: PROJECT_PLACEHOLDER,
+        title: 'ECHOKEYS',
+        thumbnail: echokeys,
         summary: 'An accessible keyboard for children with cerebral palsy and other motor disabilities.',
-        images: [PROJECT_PLACEHOLDER],
+        images: [echokeys],
         links: [],
         details: `
           <p>This is a project that I find very endearing. The goal of this project was to create an adaptable piano keyboard for children with cerebral palsy and other motor disabilities. The keyboard is designed to be easy to use and accessible for children with limited mobility. The keyboard features large, colorful keys that are easy to press, as well as a built-in speaker that allows children to hear the notes they are playing. The keyboard also has a variety of different modes and settings that can be adjusted to suit the needs of each individual child. My hope is that this keyboard will help children with disabilities to develop their musical skills and express themselves through music. I have gotten news recognition from my local newspaper.</p>
@@ -557,12 +566,32 @@ const projectSections = {
       },
       {
         title: 'Origami FLOWER Solar Array',
-        thumbnail: PROJECT_PLACEHOLDER,
+        thumbnail: lotus,
         summary: 'A bi-stable origami module for space that transforms between a solar array and a blast shield.',
-        images: [PROJECT_PLACEHOLDER],
+        images: [lotus],
         links: [],
         details: `
           <p>I worked on this as an AP research project, something that I would like to present as FLOWER, or the Fault-taulerant Lightweight Origami With Error Recovery. Essentially, I wanted to create an origami module for space systems in which it can be transfigurable between different states, adapting to its environment. For this project I did 2 states, a solar array, and a blast shield, but for future iterations I could make multiple states through the use of origami. I wanted to make it so that the module can be reconfigured in space, and even be able to self-repair if damaged. This would make it very useful for long-term space missions where maintenance is difficult or impossible.</p>
+        `
+      },
+      {
+        title: 'PROSPECT',
+        thumbnail: prospect,
+        summary: 'A Portable Retinal Opthalmoscope for Low Resource Environments and Clinical Training.',
+        images: [prospect],
+        links: [],
+        details: `
+          <p>PROSPECT is a project that me and my friend worked on for a state-wide science and engineering competition. We ended up winning 2nd place in the biomedical engineering category for it. Essentially, we developed a portable retinal ophthalmoscope designed for use in low-resource environments and for clinical training purposes through integrating a modular, 3D printable opthalmoscope design and headset, with web sourced machine learning models for further retinal analysis in order to catch or identify retinal abnormalities. We used a vessel segmentation approach, finding and categorizing characteristics within the vessel such as density, tortuosity, geometry, etc. and connecting them to online datasets that relate abnormalities within such characteristics to disease. We even found that the retinal tissue could also be connected to the brain, and with further training and access to neurodegenerative links between the retina and brain datasets we could expand this classification model to be able to track early onset signs of neurodegenerative diseases. Currently, we are improving the system, and even working with a PI within Johns Hopkins University who took interest in our project and turning it into a more comprehensive solution and research paper.</p>
+        `
+      },
+      {
+        title: 'Mini Charlotte',
+        thumbnail: miniCharolette,
+        summary: 'An autonomous hexapod robot made as a smaller copy of the original.',
+        images: [miniCharolette],
+        links: [],
+        details: `
+          <p>This is a current project that I am working on as part of the ASU Luminosity Lab. Mini Charlotte is a scaled-down version of the Charolette robot, a hexapod laboratory robot that analyzes regolith samples in lunar craters. It is designed to demonstrate the core principles of the original design in a more compact form. This project focuses on maintaining the essential functionality and performance of the full-size robot while reducing its overall dimensions and weight. Our goal is to create multiple of these to be used as testing examples for other projects around the lab.</p>
         `
       },
       {
@@ -572,7 +601,7 @@ const projectSections = {
         images: [PROJECT_PLACEHOLDER],
         links: [],
         details: `
-          <p>This is a project that I have been working on for a while now. The goal of this project is to create a quadruped robot that can walk and run like a dog. The robot is designed to be lightweight and agile, with a linear actuator system that allows for smooth and precise movement. since linear actuator cost a lot of money, I took it into my own accords to develop and design my own 3d linear actuator for the legs. For future potential iterations, The robot could be equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It could use a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. My hope is that this robot will be able to assist in various applications such as search and rescue, exploration, and environmental monitoring.</p>
+          <p>This is a project that I have been working on and off for a while now. The goal of this project is to create a quadruped robot that can walk and run like a dog. The robot is designed to be lightweight and agile, with a linear actuator system that allows for smooth and precise movement. since linear actuator cost a lot of money, I took it into my own accords to develop and design my own 3d linear actuator for the legs. For future potential iterations, The robot could be equipped with various sensors such as LIDAR, cameras, and ultrasonic sensors to help it perceive its surroundings. It could use a combination of computer vision and machine learning algorithms to make decisions and navigate autonomously. My hope is that this robot will be able to assist in various applications such as search and rescue, exploration, and environmental monitoring.</p>
         `
       }
     ]
@@ -732,6 +761,9 @@ function showModalFor(name) {
     // reuse the cached gallery so images aren't re-requested/re-decoded on every open
     content.innerHTML = '';
     content.appendChild(getArtworkGallery());
+  } else if (name === 'MusicDisplay_Raycaster_Hover') {
+    content.innerHTML = '';
+    content.appendChild(getMusicPlayer());
   } else if (projectSections[name]) {
     projectGridScroll = 0;
     renderProjectGrid(name);
@@ -953,7 +985,7 @@ window.addEventListener('click', (e) => {
   // the scene is locked while the intro modal is showing
   if (introActive) return;
   // ignore clicks on the UI elements
-  if (e.target && (e.target.id === 'zoom-exit-btn' || e.target.closest && e.target.closest('#zoom-modal'))) return;
+  if (e.target && (e.target.id === 'zoom-exit-btn' || e.target.closest && (e.target.closest('#zoom-modal') || e.target.closest('#music-widget')))) return;
   // if still zooming, ignore clicks
   if (isZooming) return;
   // if already zoomed, clicking the zoomed object should open its modal (if not open)
@@ -1146,4 +1178,317 @@ function buildArtworkGallery(container) {
     item.appendChild(cap);
     grid.appendChild(item);
   });
+}
+
+// --------------------- Music player ---------------------
+// Put audio files in /public/audio/music/ and set each track's `src` to its path,
+// e.g. src: '/audio/music/my-song.mp3' (mp3, m4a, ogg and wav all work).
+// Tracks with an empty `src` show as "Audio coming soon" and can't be played.
+const musicTracks = [
+  { title: 'SHINE', subtitle: 'Original Composition - 2026', src: '/audio/music/shine.mp3' },
+  { title: 'WINDFLOWER', subtitle: 'Original Composition - 2026', src: '/audio/music/windflower.mp3' },
+  { title: 'OCEAN', subtitle: 'Original Composition - 2025', src: '/audio/music/ocean.mp3' },
+  { title: 'NIGHTFALL', subtitle: 'Original Composition - 2025', src: '/audio/music/nightfall.mp3' },
+  { title: 'LOTUS', subtitle: 'Original Composition - 2025', src: '/audio/music/lotus.mp3' },
+  { title: 'ISLE', subtitle: 'Original Composition - 2025', src: '/audio/music/isle.mp3' },
+  { title: 'IDEAL', subtitle: 'Original Composition - 2024', src: '/audio/music/ideal.mp3' },
+  { title: 'Coming Soon', subtitle: 'new songs coming soon', src: '' },
+  { title: 'Coming Soon', subtitle: 'new songs coming soon', src: '' },
+  { title: 'Coming Soon', subtitle: 'new songs coming soon', src: '' }
+];
+
+const ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>';
+const ICON_VOLUME = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const ICON_MUTED = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+// one entry per track: { row, audio, playBtn, muteBtn, volume, seek, timeEl, durationEl }
+const musicRows = [];
+let currentTrackRow = null;
+// volume is shared, so changing it on one song applies to every song
+let musicVolume = 0.8;
+let musicMuted = false;
+let musicPlayer = null;
+
+function formatTime(seconds) {
+  if (!isFinite(seconds)) return '--:--';
+  const s = Math.floor(seconds);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
+function getMusicPlayer() {
+  // cached like the artwork gallery so song lengths and playback position survive reopening the modal
+  if (musicPlayer) return musicPlayer;
+  musicPlayer = document.createElement('div');
+  musicPlayer.className = 'music-view';
+  musicPlayer.innerHTML = userContents['MusicDisplay_Raycaster_Hover'] || '';
+  const list = document.createElement('div');
+  list.className = 'track-list';
+  musicTracks.forEach((track, i) => list.appendChild(createTrackRow(track, i)));
+  musicPlayer.appendChild(list);
+  return musicPlayer;
+}
+
+function createTrackRow(track, index) {
+  const row = document.createElement('div');
+  row.className = 'track';
+  row.innerHTML = `
+    <div class="track-head">
+      <span class="track-num">${String(index + 1).padStart(2, '0')}</span>
+      <div class="track-info">
+        <h3 class="track-title"></h3>
+        <p class="track-sub"></p>
+      </div>
+      <span class="track-badge"></span>
+    </div>
+    <div class="track-controls">
+      <button type="button" class="track-btn track-play" aria-label="Play">${ICON_PLAY}</button>
+      <button type="button" class="track-btn track-mute" aria-label="Mute">${ICON_VOLUME}</button>
+      <input type="range" class="track-range track-volume" min="0" max="1" step="0.01" aria-label="Volume">
+      <span class="track-time">0:00</span>
+      <input type="range" class="track-range track-seek" min="0" max="1000" value="0" aria-label="Seek">
+      <span class="track-duration">--:--</span>
+    </div>
+  `;
+  row.querySelector('.track-title').textContent = track.title;
+  row.querySelector('.track-sub').textContent = track.subtitle || '';
+
+  const r = {
+    row,
+    audio: null,
+    playBtn: row.querySelector('.track-play'),
+    muteBtn: row.querySelector('.track-mute'),
+    volume: row.querySelector('.track-volume'),
+    seek: row.querySelector('.track-seek'),
+    timeEl: row.querySelector('.track-time'),
+    durationEl: row.querySelector('.track-duration')
+  };
+  musicRows.push(r);
+
+  r.muteBtn.addEventListener('click', () => { musicMuted = !musicMuted; applyMusicVolume(); });
+  r.volume.addEventListener('input', () => {
+    musicVolume = parseFloat(r.volume.value);
+    musicMuted = musicVolume === 0;
+    applyMusicVolume();
+  });
+
+  if (!track.src) {
+    setTrackUnavailable(r, 'Audio coming soon');
+    applyMusicVolume();
+    return row;
+  }
+
+  const audio = new Audio();
+  audio.preload = 'metadata'; // loads just enough to show the song length
+  audio.src = track.src;
+  r.audio = audio;
+
+  r.playBtn.addEventListener('click', () => toggleTrack(r));
+  r.seek.addEventListener('input', () => {
+    if (isFinite(audio.duration)) audio.currentTime = (r.seek.value / 1000) * audio.duration;
+    updateTrackProgress(r);
+  });
+
+  audio.addEventListener('loadedmetadata', () => { r.durationEl.textContent = formatTime(audio.duration); });
+  audio.addEventListener('timeupdate', () => updateTrackProgress(r));
+  audio.addEventListener('play', () => {
+    row.classList.add('playing');
+    r.playBtn.innerHTML = ICON_PAUSE;
+    r.playBtn.setAttribute('aria-label', 'Pause');
+    updateMusicWidget();
+    startVisualizer();
+  });
+  audio.addEventListener('pause', () => {
+    row.classList.remove('playing');
+    r.playBtn.innerHTML = ICON_PLAY;
+    r.playBtn.setAttribute('aria-label', 'Play');
+    updateMusicWidget();
+  });
+  audio.addEventListener('ended', () => {
+    audio.currentTime = 0;
+    updateTrackProgress(r);
+    playNextTrack(r);
+  });
+  audio.addEventListener('error', () => setTrackUnavailable(r, 'Audio file not found'));
+
+  applyMusicVolume();
+  return row;
+}
+
+function setTrackUnavailable(r, message) {
+  r.row.classList.add('unavailable');
+  r.row.querySelector('.track-badge').textContent = message;
+  r.playBtn.disabled = true;
+  r.seek.disabled = true;
+  if (r.audio) r.audio.pause();
+  r.audio = null;
+}
+
+// only one song plays at a time
+function toggleTrack(r) {
+  if (!r.audio) return;
+  if (!r.audio.paused) { r.audio.pause(); return; }
+  if (currentTrackRow && currentTrackRow !== r && currentTrackRow.audio) currentTrackRow.audio.pause();
+  currentTrackRow = r;
+  connectVisualizer(r.audio);
+  r.audio.play().catch(() => {});
+}
+
+// index of the next playable track in `step` direction (+1 / -1), or -1 if there is none
+function findPlayableTrack(fromIndex, step, wrap) {
+  const n = musicRows.length;
+  for (let k = 1; k < n; k++) {
+    let i = fromIndex + step * k;
+    if (wrap) i = (i + n) % n;
+    else if (i < 0 || i >= n) return -1;
+    if (musicRows[i].audio) return i;
+  }
+  return -1;
+}
+
+// when a song finishes, continue with the next playable one
+function playNextTrack(r) {
+  const i = findPlayableTrack(musicRows.indexOf(r), 1, false);
+  if (i !== -1) toggleTrack(musicRows[i]);
+}
+
+// skip buttons in the widget wrap around the list and start the new song from the beginning
+function skipTrack(step) {
+  if (!currentTrackRow) return;
+  // "previous" restarts the current song first if it's more than a few seconds in
+  if (step < 0 && currentTrackRow.audio && currentTrackRow.audio.currentTime > 3) {
+    currentTrackRow.audio.currentTime = 0;
+    return;
+  }
+  const i = findPlayableTrack(musicRows.indexOf(currentTrackRow), step, true);
+  if (i === -1) return;
+  const next = musicRows[i];
+  if (currentTrackRow.audio) currentTrackRow.audio.pause();
+  next.audio.currentTime = 0;
+  toggleTrack(next);
+}
+
+function updateTrackProgress(r) {
+  const audio = r.audio;
+  if (!audio) return;
+  const pct = isFinite(audio.duration) && audio.duration > 0 ? audio.currentTime / audio.duration : 0;
+  r.seek.value = Math.round(pct * 1000);
+  r.seek.style.setProperty('--progress', `${pct * 100}%`);
+  r.timeEl.textContent = formatTime(audio.currentTime);
+}
+
+function applyMusicVolume() {
+  const shown = musicMuted ? 0 : musicVolume;
+  for (const r of musicRows) {
+    if (r.audio) { r.audio.volume = musicVolume; r.audio.muted = musicMuted; }
+    r.volume.value = shown;
+    r.volume.style.setProperty('--progress', `${shown * 100}%`);
+    r.muteBtn.innerHTML = musicMuted ? ICON_MUTED : ICON_VOLUME;
+    r.muteBtn.setAttribute('aria-label', musicMuted ? 'Unmute' : 'Mute');
+  }
+  updateMusicWidget();
+}
+
+// --------------------- Now-playing widget ---------------------
+// small top-right player that stays on screen after the music modal is closed
+const ICON_PREV = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM19 5v14L9 12z" fill="currentColor"/></svg>';
+const ICON_NEXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM5 5v14l10-7z" fill="currentColor"/></svg>';
+const VISUALIZER_BARS = 5;
+
+function createMusicWidget() {
+  const widget = document.createElement('div');
+  widget.id = 'music-widget';
+  widget.className = 'music-widget';
+  widget.setAttribute('aria-label', 'Now playing');
+  widget.innerHTML = `
+    <div class="mw-viz" aria-hidden="true">${'<span></span>'.repeat(VISUALIZER_BARS)}</div>
+    <div class="mw-info">
+      <span class="mw-label">Now playing</span>
+      <span class="mw-title"></span>
+    </div>
+    <div class="mw-controls">
+      <button type="button" class="mw-btn mw-prev" aria-label="Previous song">${ICON_PREV}</button>
+      <button type="button" class="mw-btn mw-play" aria-label="Play">${ICON_PLAY}</button>
+      <button type="button" class="mw-btn mw-next" aria-label="Next song">${ICON_NEXT}</button>
+      <button type="button" class="mw-btn mw-mute" aria-label="Mute">${ICON_VOLUME}</button>
+    </div>
+  `;
+  widget.querySelector('.mw-prev').addEventListener('click', () => skipTrack(-1));
+  widget.querySelector('.mw-next').addEventListener('click', () => skipTrack(1));
+  widget.querySelector('.mw-play').addEventListener('click', () => { if (currentTrackRow) toggleTrack(currentTrackRow); });
+  widget.querySelector('.mw-mute').addEventListener('click', () => { musicMuted = !musicMuted; applyMusicVolume(); });
+  document.body.appendChild(widget);
+  return widget;
+}
+const musicWidget = createMusicWidget();
+const vizBars = Array.from(musicWidget.querySelectorAll('.mw-viz span'));
+
+function updateMusicWidget() {
+  // stays hidden until a song has been started
+  if (!currentTrackRow || !currentTrackRow.audio) return;
+  const playing = !currentTrackRow.audio.paused;
+  musicWidget.classList.add('visible');
+  musicWidget.classList.toggle('playing', playing);
+  musicWidget.querySelector('.mw-title').textContent = musicTracks[musicRows.indexOf(currentTrackRow)].title;
+  const playBtn = musicWidget.querySelector('.mw-play');
+  playBtn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+  playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  const muteBtn = musicWidget.querySelector('.mw-mute');
+  muteBtn.innerHTML = musicMuted ? ICON_MUTED : ICON_VOLUME;
+  muteBtn.setAttribute('aria-label', musicMuted ? 'Unmute' : 'Mute');
+}
+
+// Audio level visualizer: songs are routed through one Web Audio analyser so the bars follow the music.
+// If Web Audio isn't available the bars fall back to a CSS animation (.mw-viz.fallback).
+let audioCtx = null;
+let analyser = null;
+let freqData = null;
+let vizRaf = null;
+const connectedAudio = new WeakSet();
+
+function connectVisualizer(audio) {
+  try {
+    if (!audioCtx) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) throw new Error('Web Audio not supported');
+      audioCtx = new Ctx();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      analyser.smoothingTimeConstant = 0.75;
+      analyser.connect(audioCtx.destination);
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+    }
+    // browsers start the context suspended until a click; this runs from the play click
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    // an <audio> element can only be connected once
+    if (!connectedAudio.has(audio)) {
+      audioCtx.createMediaElementSource(audio).connect(analyser);
+      connectedAudio.add(audio);
+    }
+  } catch (e) {
+    analyser = null;
+    musicWidget.querySelector('.mw-viz').classList.add('fallback');
+  }
+}
+
+// frequency bins sampled for each bar, low to high (music energy sits mostly in the low bins)
+const VIZ_BINS = [1, 3, 5, 8, 12];
+
+function startVisualizer() {
+  if (vizRaf !== null || !analyser) return;
+  const draw = () => {
+    const playing = currentTrackRow && currentTrackRow.audio && !currentTrackRow.audio.paused;
+    if (!playing) {
+      vizBars.forEach((bar) => { bar.style.transform = ''; });
+      vizRaf = null;
+      return;
+    }
+    analyser.getByteFrequencyData(freqData);
+    vizBars.forEach((bar, i) => {
+      const level = freqData[VIZ_BINS[i]] / 255;
+      bar.style.transform = `scaleY(${0.15 + level * 0.85})`;
+    });
+    vizRaf = requestAnimationFrame(draw);
+  };
+  vizRaf = requestAnimationFrame(draw);
 }
